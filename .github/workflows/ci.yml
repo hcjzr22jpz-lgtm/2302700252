@@ -128,9 +128,12 @@ jobs:
       - name: Deploy to Railway
         if: env.RENDER_DEPLOY_HOOK_URL == '' && env.RAILWAY_TOKEN != ''
         run: |
-          deploy_args=(up --ci)
+          railway_service="${RAILWAY_SERVICE:-${GITHUB_REPOSITORY#*/}}"
+          deploy_args=(up --ci --service "$railway_service")
           if [ -n "$RAILWAY_SERVICE" ]; then
-            deploy_args+=(--service "$RAILWAY_SERVICE")
+            echo "Deploying Railway service from RAILWAY_SERVICE: $railway_service"
+          else
+            echo "Deploying Railway service from repository name: $railway_service"
           fi
           npx @railway/cli "${deploy_args[@]}"
 
@@ -139,4 +142,4 @@ jobs:
         run: |
           echo "Build artifact is ready."
           echo "Set RENDER_DEPLOY_HOOK_URL or RAILWAY_TOKEN to enable automatic deploy."
-          echo "Optional: set RAILWAY_SERVICE when the Railway project has multiple services."
+          echo "Optional: set RAILWAY_SERVICE if the Railway service name differs from the repository name."
