@@ -70,4 +70,5 @@ Render:
 Railway:
 
 - Dung `railway.json` hoac `Procfile`.
-- Neu muon deploy tu dong qua GitHub Actions, them secret `RAILWAY_TOKEN`.
+- Neu muon deploy tu dong qua GitHub Actions, them secret `RAILWAY_TOKEN` bang Railway project token.
+- Neu project co nhieu service, them secret `RAILWAY_SERVICE` dung bang ten service tren Railway.

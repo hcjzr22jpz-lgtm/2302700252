@@ -116,6 +116,7 @@ jobs:
     env:
       RENDER_DEPLOY_HOOK_URL: ${{ secrets.RENDER_DEPLOY_HOOK_URL }}
       RAILWAY_TOKEN: ${{ secrets.RAILWAY_TOKEN }}
+      RAILWAY_SERVICE: ${{ secrets.RAILWAY_SERVICE }}
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -126,10 +127,16 @@ jobs:
 
       - name: Deploy to Railway
         if: env.RENDER_DEPLOY_HOOK_URL == '' && env.RAILWAY_TOKEN != ''
-        run: npx @railway/cli up --service swagstore
+        run: |
+          deploy_args=(up --ci)
+          if [ -n "$RAILWAY_SERVICE" ]; then
+            deploy_args+=(--service "$RAILWAY_SERVICE")
+          fi
+          npx @railway/cli "${deploy_args[@]}"
 
       - name: Skip deploy when no secret is configured
         if: env.RENDER_DEPLOY_HOOK_URL == '' && env.RAILWAY_TOKEN == ''
         run: |
           echo "Build artifact is ready."
           echo "Set RENDER_DEPLOY_HOOK_URL or RAILWAY_TOKEN to enable automatic deploy."
+          echo "Optional: set RAILWAY_SERVICE when the Railway project has multiple services."
