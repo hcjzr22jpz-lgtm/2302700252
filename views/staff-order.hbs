@@ -1,0 +1,51 @@
+<div class="page-container">
+  <div class="page-header order-header">
+    <div>
+      <a href="/staff/products" class="back-link">Back to Staff Products</a>
+      <h1 class="page-title">Create Customer Order</h1>
+      <p class="page-subtitle">Staff can place an order on behalf of an existing customer account.</p>
+    </div>
+    <div class="page-metrics">
+      <span class="pill pill-active">{{customers.length}} customers</span>
+      <span class="pill">{{products.length}} products</span>
+    </div>
+  </div>
+
+  {{#if error}}<div class="alert alert-error">{{error}}</div>{{/if}}
+
+  {{#unless customers.length}}
+  <div class="alert alert-error">Create at least one customer account before placing a staff order.</div>
+  {{/unless}}
+
+  <form method="POST" action="/staff/order" class="staff-order-form">
+    <section class="form-section">
+      <h2 class="form-section-title">Customer</h2>
+      <div class="form-group">
+        <label class="form-label">Order for</label>
+        <select name="customerId" class="form-input" required>
+          <option value="">Choose customer</option>
+          {{#each customers}}
+          <option value="{{id}}" {{#if selected}}selected{{/if}}>{{name}} - {{email}}</option>
+          {{/each}}
+        </select>
+      </div>
+    </section>
+
+    <section class="form-section">
+      <h2 class="form-section-title">Products</h2>
+      <div class="staff-order-lines">
+        {{#each products}}
+        <div class="staff-order-line">
+          <div>
+            <p class="item-name">{{name}}</p>
+            <p class="item-subtext">{{category}} / {{type}} / ${{price}}</p>
+          </div>
+          <input type="number" name="qty_{{id}}" class="qty-input staff-qty" value="{{qty}}" min="0" step="1" aria-label="Quantity for {{name}}">
+        </div>
+        {{/each}}
+      </div>
+    </section>
+
+    <button type="submit" class="btn-primary btn-large btn-full" {{#unless customers.length}}disabled{{/unless}}>Create Order</button>
+  </form>
+</div>

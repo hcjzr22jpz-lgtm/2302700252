@@ -1,0 +1,20 @@
+[
+  {
+    "id": 1001,
+    "name": "Demo Staff",
+    "email": "staff@swagstore.test",
+    "address": "SwagStore Office",
+    "passwordHash": "$2a$10$XkAwfN4MQES.RLFQq3tQuOVEE9TliKRMaMXW08iEmHm8SG5LJzy9y",
+    "role": "staff",
+    "createdAt": "2026-06-03T00:00:00.000Z"
+  },
+  {
+    "id": 1002,
+    "name": "Demo Customer",
+    "email": "customer@swagstore.test",
+    "address": "123 Customer Street",
+    "passwordHash": "$2a$10$hG2YL2sF1ulk9pTgjgS.k.LdAywFFMHxfBgi2LpbldxhgGj/B9vD6",
+    "role": "customer",
+    "createdAt": "2026-06-03T00:00:00.000Z"
+  }
+]

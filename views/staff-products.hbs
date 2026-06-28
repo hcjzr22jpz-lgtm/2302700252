@@ -1,0 +1,54 @@
+<div class="page-container">
+  <div class="page-header order-header">
+    <div>
+      <a href="/" class="back-link">Back to Shop</a>
+      <h1 class="page-title">Staff Products</h1>
+      <p class="page-subtitle">Manage the product catalog used by the store.</p>
+    </div>
+    <div class="page-metrics">
+      <a href="/staff/order" class="pill">Create customer order</a>
+      <a href="/staff/products/new" class="pill pill-active">Add product</a>
+    </div>
+  </div>
+
+  {{#if messages.created}}<div class="alert alert-success">{{messages.created}}</div>{{/if}}
+  {{#if messages.updated}}<div class="alert alert-success">{{messages.updated}}</div>{{/if}}
+  {{#if messages.deleted}}<div class="alert alert-success">{{messages.deleted}}</div>{{/if}}
+
+  <div class="admin-table-wrap">
+    <table class="admin-table">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Product</th>
+          <th>Category</th>
+          <th>Type</th>
+          <th>Price</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        {{#each products}}
+        <tr>
+          <td>{{id}}</td>
+          <td>
+            <strong>{{name}}</strong>
+            <span>{{desc}}</span>
+          </td>
+          <td>{{category}}</td>
+          <td>{{type}}</td>
+          <td>${{price}}</td>
+          <td>
+            <div class="table-actions">
+              <a href="/staff/products/{{id}}/edit" class="btn-ghost">Edit</a>
+              <form method="POST" action="/staff/products/{{id}}/delete" class="inline-form">
+                <button type="submit" class="btn-ghost danger-action">Delete</button>
+              </form>
+            </div>
+          </td>
+        </tr>
+        {{/each}}
+      </tbody>
+    </table>
+  </div>
+</div>
